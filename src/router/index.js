@@ -3,6 +3,8 @@ import Vue from 'vue'
 import VueRouter from 'vue-router'
 // @在vue-cli创建的项目中代表被写死的src目录
 import login from '@/views/login'
+import home from '@/views/home'
+import welcome from '@/views/welcome'
 
 // 注册 导入vue
 Vue.use(VueRouter)
@@ -11,7 +13,14 @@ Vue.use(VueRouter)
 const router = new VueRouter({
   // 路由规则
   routes: [
-    { path: '/login', name: 'login', component: login }
+    { path: '/login', name: 'login', component: login },
+    {
+      path: '/',
+      component: home,
+      children: [
+        { path: '/', name: 'welcome', component: welcome }
+      ]
+    }
   ]
 })
 
