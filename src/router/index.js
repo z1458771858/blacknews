@@ -1,27 +1,44 @@
-import Vue from 'vue'
-// 创建路由对象及配置路由规则和其他路由配置
+// 创建路由对象 及 配置路由规则 和 其他路由配置
 import VueRouter from 'vue-router'
-// @在vue-cli创建的项目中代表被写死的src目录
-import login from '@/views/login'
-import home from '@/views/home'
-import welcome from '@/views/welcome'
+import Vue from 'vue'
+import Login from '@/views/login'
+import Home from '@/views/home'
+import Welcome from '@/views/welcome'
+import NotFound from '@/views/404'
 
-// 注册 导入vue
 Vue.use(VueRouter)
 
-// 初始化router对象(配置路由规则)
 const router = new VueRouter({
-  // 路由规则
   routes: [
-    { path: '/login', name: 'login', component: login },
+    { path: '/login', name: 'login', component: Login },
     {
       path: '/',
-      component: home,
+      component: Home,
       children: [
-        { path: '/', name: 'welcome', component: welcome }
+        { path: '/', name: 'welcome', component: Welcome }
       ]
-    }
+    },
+    // 路径走到这个位置，证明没有任何程序去处理这个路径
+    { path: '*', name: '404', component: NotFound }
   ]
+})
+
+// 注册一个全局的前置导航守卫
+router.beforeEach((to, from, next) => {
+  // 如果不去主动的触发 resolve（next 下一步） 会一直等待
+  // console.log('ok')
+  // 如果是登录页面 放行
+  // if (to.path === '/login') return next()
+  // // 判断登录状态
+  // const user = window.sessionStorage.getItem('blacknews')
+  // if (user) {
+  //   next()
+  // } else {
+  //   next('/login')
+  // }
+  const user = window.sessionStorage.getItem('blacknews')
+  if (to.path !== '/login' && !user) return next('/login')
+  next()
 })
 
 export default router
