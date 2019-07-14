@@ -13,7 +13,7 @@ const instance = axios.create({
 instance.interceptors.request.use(config => {
   // config 请求配置对象
   // 修改config
-  const user = window.sessionStorage.getItem('hm73-toutiao')
+  const user = window.sessionStorage.getItem('blacknews')
   if (user) {
     config.headers = {
       Authorization: 'Bearer ' + JSON.parse(user).token
