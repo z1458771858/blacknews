@@ -4,7 +4,7 @@
       <div class="logo" :class="{close:collapse}"></div>
       <!-- 导航菜单组件容器 -->
       <el-menu
-        default-active="/"
+        default-active="$route.path"
         background-color="#002033"
         text-color="#fff"
         active-text-color="#ffd04b"
